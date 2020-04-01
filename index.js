@@ -22,12 +22,12 @@ class State {
   }
 
   getStoredLanguage() {
-    if (!localStorage.getItem("keyboardLanguage")) {
+    let localStorageLanguage = localStorage.getItem("keyboardLanguage");
+    if (!localStorageLanguage) {
       localStorage.setItem("keyboardLanguage", "en");
       return "en";
-    } else {
-      return localStorage.getItem("keyboardLanguage");
-    }
+    } 
+    return localStorageLanguage;
   }
 
   setStoredLanguage() {
@@ -78,17 +78,16 @@ class State {
 
 class Key {
   constructor( key, currentLanguage ) {
-    //load each key property
     this.enRegular = key.en.regular;
     this.enShifted = key.en.shifted ? key.en.shifted : false;
     this.ruRegular = key.ru.regular;
     this.ruShifted = key.ru.shifted ? key.ru.shifted : false;
-    this.addKeyToDOM( currentLanguage );
+    this.addKeyToDOM( key, currentLanguage );
   }
 
-  addKeyToDOM( currentLanguage ) {
+  addKeyToDOM( keyData, currentLanguage ) {
     let key = document.createElement("div");
-    key.classList.add("button");
+    key.classList = keyData.classCSS;
     keyboard.appendChild(key);
     key.innerText = this[`${currentLanguage}Regular`];
     this.keyDOM = key;
@@ -106,5 +105,18 @@ const onMouseClick = (e) => {
 }
 
 keyboard.addEventListener('click', onMouseClick);
+
+
+let pressedKeys = new Set();
+document.addEventListener('keydown', (key) => {
+// document.addEventListener('keypress', (key) => {
+  if ( key.code === "CapsLock" ) {
+    if (!key.repeat) {
+    state.changeCapsLockActive();
+  }
+  }
+  pressedKeys.add(key.keyCode);
+  textarea.value =  `key - ${key.key}, code - ${key.code}, charcode ${key.charCode}`;
+});
 
 window.state = state;
