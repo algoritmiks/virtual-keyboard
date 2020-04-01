@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  background-color: rgb(168, 168, 168);
+}
+
+.wrapper {
+  margin: 0 auto;
+  max-width: 1020px;
+}
+
+.textarea {
+  width: 500px;
+  background-color: rgb(163, 153, 153);
+  resize: none;
+}
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2px;
+}
+
+.button {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  margin: 2px;
+  justify-content: center;
+  align-items: center;
+  color: rgb(50, 96, 150);
+  border-radius: 5px;
+  background-color: rgb(196, 196, 196);
+}
+
+.shift {
+  width: 200px;
+}
+
+.space {
+  width: 482px;
+}
+
+.button:hover {
+  background-color: rgb(114, 114, 114);
+}
