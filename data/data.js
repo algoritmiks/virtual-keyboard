@@ -208,7 +208,7 @@ const data = [
     code: "CapsLock",
     en: { regular: "CapsLock", shifted: "CapsLock" },
     ru: { regular: "CapsLock", shifted: "CapsLock" },
-    classCSS: "button"
+    classCSS: "button medium"
   },
 
   {
@@ -292,14 +292,14 @@ const data = [
     code: "Enter",
     en: { regular: "Enter", shifted: "Enter" },
     ru: { regular: "Enter", shifted: "Enter" },
-    classCSS: "button"
+    classCSS: "button medium"
   },
   
   {
     code: "ShiftLeft",
     en: { regular: "Shift", shifted: "Shift" },
     ru: { regular: "Shift", shifted: "Shift" },
-    classCSS: "button"
+    classCSS: "button medium"
   },
   
   {
@@ -383,7 +383,7 @@ const data = [
     code: "ShiftRight",
     en: { regular: "Shift", shifted: "Shift" },
     ru: { regular: "Shift", shifted: "Shift" },
-    classCSS: "button"
+    classCSS: "button medium"
   },
   
   {
@@ -411,7 +411,7 @@ const data = [
     code: "Space",
     en: { regular: "Space", shifted: "Space" },
     ru: { regular: "Space", shifted: "Space" },
-    classCSS: "button"
+    classCSS: "button space"
   },
 
   {

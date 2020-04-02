@@ -5,7 +5,7 @@ body {
 
 .wrapper {
   margin: 0 auto;
-  max-width: 1020px;
+  max-width: 825px;
 }
 
 .textarea {
@@ -32,12 +32,20 @@ body {
   background-color: rgb(196, 196, 196);
 }
 
-.shift {
-  width: 200px;
+.tab {
+  width: 60px;
+}
+
+.medium {
+  width: 109px;
+}
+
+.backspace {
+  width: 114px;
 }
 
 .space {
-  width: 482px;
+  width: 384px;
 }
 
 .button:hover {
