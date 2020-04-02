@@ -2,7 +2,7 @@ import { data } from './data/data.js';
    
 const wrapper = document.createElement("div");
 wrapper.classList.add("wrapper");
-document.querySelector("body").appendChild(wrapper);
+document.body.appendChild(wrapper);
 
 const textarea = document.createElement("textarea");
 textarea.classList.add("textarea");
@@ -15,10 +15,10 @@ wrapper.appendChild(keyboard);
 
 class State {
   constructor( data ) {
-    this._currentLanguage = this.getStoredLanguage();
-    this._capsLockActive = false;
-    this._shiftActive = false;
-    this._keys = {};
+    this.currentLanguage = this.getStoredLanguage();
+    this.capsLockActive = false;
+    this.shiftActive = false;
+    this.keys = {};
     this.initKeys( data );
   }
 
@@ -32,55 +32,78 @@ class State {
   }
 
   setStoredLanguage() {
-    localStorage.setItem("keyboardLanguage", this._currentLanguage);
+    localStorage.setItem("keyboardLanguage", this.currentLanguage);
   }
 
   initKeys( data ) {
     data.forEach( el => {
-      this._keys[el.code] = new Key( el, this._currentLanguage );
+      this.keys[el.code] = new Key( el, this.currentLanguage );
     })
   }
 
   updateKeysLanguage() {
-    for (let key in this._keys) {
-      this._keys[key].keyDOM.innerText = this._keys[key][this._currentLanguage].regular;
+    for (let key in this.keys) {
+      this.keys[key].keyDOM.innerText = this.keys[key][this.currentLanguage].regular;
     }
   }
 
   changeLanguage() {
-    if (this._currentLanguage === "en") {
-      this._currentLanguage = "ru";
+    if (this.currentLanguage === "en") {
+      this.currentLanguage = "ru";
     } else {
-      this._currentLanguage = "en";
+      this.currentLanguage = "en";
     }
     this.setStoredLanguage();
     this.updateKeysLanguage();
-    this.changeKeysCase();
+    this.toggleKeyCaps();
   }
 
   changeCapsLockActive() {
-    this._capsLockActive = !this._capsLockActive;
-    this.changeKeysCase();
+    this.capsLockActive = !this.capsLockActive;
+    this.toggleKeyCaps();
   }
 
-  changeKeysCase() {
-    for (let key in this._keys) {
-      let currentKey = this._keys[key];
-      if ( !currentKey[this._currentLanguage].shifted && this._capsLockActive ) {
+  toggleKeyCaps() {
+    for (let key in this.keys) {
+      let currentKey = this.keys[key];
+      if ( !currentKey[this.currentLanguage].shifted && this.capsLockActive ) {
         currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toUpperCase();
       }
-      if ( !currentKey[this._currentLanguage].shifted && !this._capsLockActive ) {
+      if ( !currentKey[this.currentLanguage].shifted && !this.capsLockActive ) {
         currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toLowerCase();
       }
     }
   }
 
   addActiveCSS( keyCode ) {
-    this._keys[keyCode].keyDOM.classList.add("active");
+    this.keys[keyCode].keyDOM.classList.add("active");
   }
 
   removeActiveCSS( keyCode ) {
-    this._keys[keyCode].keyDOM.classList.remove("active");
+    this.keys[keyCode].keyDOM.classList.remove("active");
+  }
+
+  specialKeysHandle( keyCode, repeat ) {
+    if (keyCode === "Space") {
+      textarea.value += " ";
+    }
+    if (keyCode === "Tab") {
+      textarea.value += "\t";
+    }
+    if (keyCode === "Enter") {
+      textarea.value += "\n";
+    }
+    if (keyCode === "Backspace") {
+      textarea.value = textarea.value.slice(0, -1);
+    }
+    if (keyCode === "Delete") {
+      //delete soon here
+    }
+
+    if ( keyCode === "CapsLock" && !repeat) {
+      state.changeCapsLockActive();
+    }
+    
   }
 
 }
@@ -94,6 +117,7 @@ class Key {
     this.en.shifted = key.en.shifted ? key.en.shifted : false;
     this.ru.regular = key.ru.regular;
     this.ru.shifted = key.ru.shifted ? key.ru.shifted : false;
+    this.special = key.special ? true : false;
     this.addKeyToDOM( key, currentLanguage );
   }
 
@@ -107,8 +131,8 @@ class Key {
 }
 
 
-
 let state = new State( data );
+let pressedKeys = new Set();
 
 const onMouseUp = (e) => {
   if (e.target.classList.contains("button")) {
@@ -117,45 +141,52 @@ const onMouseUp = (e) => {
     } else {
       textarea.value += e.target.innerText;
     }
-    
   }
+  textarea.focus();
 }
 
 keyboard.addEventListener('mouseup', onMouseUp);
 
 
-let pressedKeys = new Set();
 
-document.addEventListener('keydown', key => {
-  if ( key.code === "Tab" ||  key.code === "AltLeft" ||  key.code === "AltRight" )  {
-    key.preventDefault();
-  }
-  
-  if (!key.repeat) {
-    if ( key.code === "CapsLock" ) {
-      state.changeCapsLockActive();
+
+const onKeyDown = (key) => {
+  key.preventDefault();
+  if (state.keys[key.code]) {
+    if (!key.repeat) {
+      state.addActiveCSS(key.code);
+      pressedKeys.add(key.code);
     }
-  state.addActiveCSS(key.code);
-  
-  pressedKeys.add(key.code);
+    if (!state.keys[key.code].special) {
+      textarea.value += state.keys[key.code].keyDOM.innerText;
+    } else {
+      state.specialKeysHandle(key.code, key.repeat);
+    }
+
   }
-  textarea.value += state._keys[key.code].keyDOM.innerText;
-  // textarea.value =  `key - ${key.key}, code - ${key.code}, charcode ${key.charCode}`;
-});
+};
 
+document.addEventListener('keydown', onKeyDown);
 
-document.addEventListener('keyup', key => {
-  let keys = [];
-  pressedKeys.forEach((el)=>{
-    keys.push(el);
-  })
-  if (keys.includes("ControlLeft") && keys.includes("AltLeft") && keys.length == 2) {
-    state.changeLanguage();
+const onKeyUp = (key) => {
+  if (state.keys[key.code]) {
+    let keys = [];
+    pressedKeys.forEach((el) => {
+      keys.push(el);
+    })
+    if (keys.includes("ControlLeft") && keys.includes("AltLeft") && keys.length == 2) {
+      state.changeLanguage();
+    }
+    state.removeActiveCSS(key.code);
+    pressedKeys.delete(key.code);
+    textarea.focus();
   }
-  state.removeActiveCSS(key.code);
-  pressedKeys.delete(key.code);
-});
+};
 
+document.addEventListener('keyup', onKeyUp);
 
-
-window.state = state;
+const onload = () => {
+  textarea.focus();
+  alert("Переключение раскладки left Alt - left Ctrl");
+}
+window.onload = onload;

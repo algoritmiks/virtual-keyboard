@@ -94,7 +94,8 @@ const data = [
     code: "Backspace",
     en: { regular: "Backspace", shifted: "Backspace" },
     ru: { regular: "Backspace", shifted: "Backspace" },
-    classCSS: "button backspace"
+    classCSS: "button backspace",
+    special: true
   },
   
   
@@ -102,7 +103,8 @@ const data = [
     code: "Tab",
     en: { regular: "Tab", shifted: "Tab" },
     ru: { regular: "Tab", shifted: "Tab" },
-    classCSS: "button tab"
+    classCSS: "button tab",
+    special: true
   },
   
   {
@@ -201,14 +203,16 @@ const data = [
     code: "Delete",
     en: { regular: "Del", shifted: "Del" },
     ru: { regular: "Del", shifted: "Del" },
-    classCSS: "button"
+    classCSS: "button",
+    special: true
   },
 
   {
     code: "CapsLock",
     en: { regular: "CapsLock", shifted: "CapsLock" },
     ru: { regular: "CapsLock", shifted: "CapsLock" },
-    classCSS: "button medium"
+    classCSS: "button medium",
+    special: true
   },
 
   {
@@ -292,14 +296,16 @@ const data = [
     code: "Enter",
     en: { regular: "Enter", shifted: "Enter" },
     ru: { regular: "Enter", shifted: "Enter" },
-    classCSS: "button medium"
+    classCSS: "button medium",
+    special: true
   },
   
   {
     code: "ShiftLeft",
     en: { regular: "Shift", shifted: "Shift" },
     ru: { regular: "Shift", shifted: "Shift" },
-    classCSS: "button medium"
+    classCSS: "button medium",
+    special: true
   },
   
   {
@@ -383,42 +389,48 @@ const data = [
     code: "ShiftRight",
     en: { regular: "Shift", shifted: "Shift" },
     ru: { regular: "Shift", shifted: "Shift" },
-    classCSS: "button medium"
+    classCSS: "button medium",
+    special: true
   },
   
   {
     code: "ControlLeft",
     en: { regular: "Ctrl", shifted: "Ctrl" },
     ru: { regular: "Ctrl", shifted: "Ctrl" },
-    classCSS: "button"
+    classCSS: "button",
+    special: true
   },
   
   {
     code: "MetaLeft",
     en: { regular: "Win", shifted: "Win" },
     ru: { regular: "Win", shifted: "Win" },
-    classCSS: "button"
+    classCSS: "button",
+    special: true
   },
 
   {
     code: "AltLeft",
     en: { regular: "Alt", shifted: "Alt" },
     ru: { regular: "Alt", shifted: "Alt" },
-    classCSS: "button"
+    classCSS: "button",
+    special: true
   },
  
   {
     code: "Space",
-    en: { regular: "Space", shifted: "Space" },
-    ru: { regular: "Space", shifted: "Space" },
-    classCSS: "button space"
+    en: { regular: " ", shifted: " " },
+    ru: { regular: " ", shifted: " " },
+    classCSS: "button space",
+    special: true
   },
 
   {
     code: "AltRight",
     en: { regular: "Alt", shifted: "Alt" },
     ru: { regular: "Alt", shifted: "Alt" },
-    classCSS: "button"
+    classCSS: "button",
+    special: true
   },
   
   {
@@ -446,7 +458,8 @@ const data = [
     code: "ControlRight",
     en: { regular: "Ctrl", shifted: "Ctrl" },
     ru: { regular: "Ctrl", shifted: "Ctrl" },
-    classCSS: "button"
+    classCSS: "button",
+    special: true
   },
 ]
 
