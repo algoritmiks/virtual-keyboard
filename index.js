@@ -17,6 +17,7 @@ class State {
   constructor( data ) {
     this._currentLanguage = this.getStoredLanguage();
     this._capsLockActive = false;
+    this._shiftActive = false;
     this._keys = {};
     this.initKeys( data );
   }
@@ -73,6 +74,15 @@ class State {
       }
     }
   }
+
+  addActiveCSS( keyCode ) {
+    state._keys[keyCode].keyDOM.classList.add("active");
+  }
+
+  removeActiveCSS( keyCode ) {
+    state._keys[keyCode].keyDOM.classList.remove("active");
+  }
+
 }
 
 
@@ -102,20 +112,27 @@ let state = new State( data );
 
 const onMouseClick = (e) => {
   if (e.target.classList.contains("button")) {
-    textarea.value += e.target.innerText;
+    if (e.target.innerText === "CapsLock") {
+      state.changeCapsLockActive();
+    } else {
+      textarea.value += e.target.innerText;
+    }
+    
   }
 }
 
-keyboard.addEventListener('click', onMouseClick);
+keyboard.addEventListener('mousedown', onMouseClick);
 
 
 let pressedKeys = new Set();
 
-document.addEventListener('keydown', (key) => {
+document.addEventListener('keydown', key => {
   if (!key.repeat) {
     if ( key.code === "CapsLock" ) {
       state.changeCapsLockActive();
     }
+  state.addActiveCSS(key.code);
+  
   pressedKeys.add(key.code);
   }
   
@@ -124,8 +141,9 @@ document.addEventListener('keydown', (key) => {
 });
 
 
-document.addEventListener('keyup', event => {
+document.addEventListener('keyup', key => {
   console.log(pressedKeys);
+  state.removeActiveCSS(key.code);
   pressedKeys.delete(event.code);
 });
 
