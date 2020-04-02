@@ -110,11 +110,11 @@ class State {
 
   specialKeysHandle(keyCode, repeat) {
     if (keyCode === "Space") {
-      textarea.value += " ";
+      this.addSymbolToTextarea(" ");
     }
 
     if (keyCode === "Tab") {
-      textarea.value += "\t";
+      this.addSymbolToTextarea("\t");
     }
 
     if (keyCode === "Enter") {
@@ -181,29 +181,40 @@ class Key {
   addKeyToDOM(keyData, currentLanguage) {
     let key = document.createElement("div");
     key.classList = keyData.classCSS;
+    key.dataset.code = keyData.code;
     keyboard.appendChild(key);
     key.innerText = this[currentLanguage].regular;
     this.keyDOM = key;
   }
 }
 
-
 let state = new State(data);
 let pressedKeys = new Set();
 
 const onMouseUp = (e) => {
-  if (e.target.classList.contains("button")) {
-    if (e.target.innerText === "CapsLock") {
-      state.changeCapsLockActive();
-    } else {
-      textarea.value += e.target.innerText;
-    }
-  }
+  let pressedKey = e.target.dataset.code;
+  if ( pressedKey === "ShiftLeft" || pressedKey === "ShiftRight" ) {
+    state.changeShiftActive();
+  };
   textarea.focus();
 }
 
 keyboard.addEventListener('mouseup', onMouseUp);
 
+const onMouseDown = (e) => {
+  if (e.target.classList.contains("button")) {
+    let pressedKey = state.keys[e.target.dataset.code];
+    if (!pressedKey.special) {
+      state.addSymbolToTextarea(pressedKey.keyDOM.innerText);
+    } else {
+      state.specialKeysHandle(e.target.dataset.code, false);
+    }
+  }
+}
+
+keyboard.addEventListener('mousedown', onMouseDown);
+
+// keyboard.addEventListener('mouseout', onMouseUp);
 
 const onKeyDown = (key) => {
   key.preventDefault();
