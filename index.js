@@ -213,9 +213,7 @@ const onKeyDown = (key) => {
       pressedKeys.add(key.code);
     }
     if (!state.keys[key.code].special) {
-      // textarea.value += state.keys[key.code].keyDOM.innerText;
       state.addSymbolToTextarea(state.keys[key.code].keyDOM.innerText);
-      // textarea.value = `${textarea.value.substring(0, textarea.selectionStart)}${state.keys[key.code].keyDOM.innerText}${textarea.value.substring(textarea.selectionStart+1)}`;
     } else {
       state.specialKeysHandle(key.code, key.repeat);
     }
