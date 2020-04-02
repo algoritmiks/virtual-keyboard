@@ -123,9 +123,11 @@ class State {
 
     if (keyCode === "Backspace") {
       let currentCarriagePosition = textarea.selectionStart;
-      textarea.value = `${textarea.value.substring(0, textarea.selectionStart-1)}${textarea.value.substring(textarea.selectionStart)}`;
-      textarea.selectionStart = currentCarriagePosition-1;
-      textarea.selectionEnd = currentCarriagePosition-1;
+      if (currentCarriagePosition > 0) {
+        textarea.value = `${textarea.value.substring(0, textarea.selectionStart-1)}${textarea.value.substring(textarea.selectionStart)}`;
+        textarea.selectionStart = currentCarriagePosition-1;
+        textarea.selectionEnd = currentCarriagePosition-1;
+      }
     }
 
     if (keyCode === "Delete") {
