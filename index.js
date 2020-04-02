@@ -224,6 +224,5 @@ document.addEventListener('keyup', onKeyUp);
 
 const onload = () => {
   textarea.focus();
-  alert("Переключение раскладки: левый Alt - левый Ctrl \n\r Layout change: left Alt - left Ctrl");
 }
 window.onload = onload;
