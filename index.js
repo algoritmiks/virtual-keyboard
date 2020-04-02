@@ -126,7 +126,10 @@ class State {
     }
 
     if (keyCode === "Delete") {
-      //delete soon here
+      let currentCarriagePosition = textarea.selectionStart;
+      textarea.value = `${textarea.value.substring(0, textarea.selectionStart)}${textarea.value.substring(textarea.selectionStart+1)}`;
+      textarea.selectionStart = currentCarriagePosition;
+      textarea.selectionEnd = currentCarriagePosition;
     }
 
     if ( (keyCode === "ShiftLeft" || keyCode === "ShiftRight") && !repeat) {
@@ -218,7 +221,6 @@ document.addEventListener('keyup', onKeyUp);
 
 const onload = () => {
   textarea.focus();
-  alert("Переключение раскладки left Alt - left Ctrl");
+  alert("Переключение раскладки: левый Alt - левый Ctrl \n\r Layout change: left Alt - left Ctrl");
 }
 window.onload = onload;
-window.state = state;
