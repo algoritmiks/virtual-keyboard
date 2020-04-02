@@ -118,7 +118,7 @@ class State {
     }
 
     if (keyCode === "Enter") {
-      textarea.value += "\n";
+      this.addSymbolToTextarea("\n");
     }
 
     if (keyCode === "Backspace") {
@@ -156,6 +156,14 @@ class State {
       textarea.selectionStart = textarea.selectionStart + 1;
     }
   }
+
+  addSymbolToTextarea(symbol) {
+    let currentCarriagePosition = textarea.selectionStart;
+    textarea.value = `${textarea.value.substring(0, textarea.selectionStart)}${symbol}${textarea.value.substring(textarea.selectionStart)}`;
+    textarea.selectionStart = currentCarriagePosition + 1;
+    textarea.selectionEnd = currentCarriagePosition +1;
+  }
+
 }
 
 class Key {
@@ -205,7 +213,9 @@ const onKeyDown = (key) => {
       pressedKeys.add(key.code);
     }
     if (!state.keys[key.code].special) {
-      textarea.value += state.keys[key.code].keyDOM.innerText;
+      // textarea.value += state.keys[key.code].keyDOM.innerText;
+      state.addSymbolToTextarea(state.keys[key.code].keyDOM.innerText);
+      // textarea.value = `${textarea.value.substring(0, textarea.selectionStart)}${state.keys[key.code].keyDOM.innerText}${textarea.value.substring(textarea.selectionStart+1)}`;
     } else {
       state.specialKeysHandle(key.code, key.repeat);
     }
