@@ -142,6 +142,14 @@ document.addEventListener('keydown', key => {
 
 
 document.addEventListener('keyup', key => {
+  let keys = [];
+  pressedKeys.forEach((el)=>{
+    keys.push(el);
+  })
+  if (keys.includes("ControlLeft") && keys.includes("AltLeft")) {
+    state.changeLanguage();
+  }
+  
   console.log(pressedKeys);
   state.removeActiveCSS(key.code);
   pressedKeys.delete(event.code);
