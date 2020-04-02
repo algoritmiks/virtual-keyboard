@@ -89,35 +89,29 @@ const data = [
     ru: { regular: "=", shifted: "+" },
     classCSS: "button"
   },
-
-  {
-    code: "Backslash",
-    en: { regular: "\\", shifted: "|" },
-    ru: { regular: "\\", shifted: "/" },
-    classCSS: "button"
-  },
-
+  
   {
     code: "Backspace",
     en: { regular: "Backspace", shifted: "Backspace" },
     ru: { regular: "Backspace", shifted: "Backspace" },
     classCSS: "button backspace"
   },
-
+  
+  
   {
     code: "Tab",
     en: { regular: "Tab", shifted: "Tab" },
     ru: { regular: "Tab", shifted: "Tab" },
     classCSS: "button tab"
   },
-
+  
   {
     code: "KeyQ",
     en: { regular: "q" },
     ru: { regular: "й" },
     classCSS: "button"
   },
-
+  
   {
     code: "KeyW",
     en: { regular: "w" },
@@ -131,14 +125,14 @@ const data = [
     ru: { regular: "у" },
     classCSS: "button"
   },
-
+  
   {
     code: "KeyR",
     en: { regular: "r" },
     ru: { regular: "к" },
     classCSS: "button"
   },
-
+  
   {
     code: "KeyT",
     en: { regular: "t" },
@@ -152,6 +146,7 @@ const data = [
     ru: { regular: "н" },
     classCSS: "button"
   },
+
   
   {
     code: "KeyU",
@@ -159,7 +154,7 @@ const data = [
     ru: { regular: "г" },
     classCSS: "button"
   },
-
+  
   {
     code: "KeyI",
     en: { regular: "i" },
@@ -187,7 +182,7 @@ const data = [
     ru: { regular: "х" },
     classCSS: "button"
   },
-
+  
   {
     code: "BracketRight",
     en: { regular: "]", shifted: "}" },
@@ -196,20 +191,263 @@ const data = [
   },
   
   {
+    code: "Backslash",
+    en: { regular: "\\", shifted: "|" },
+    ru: { regular: "\\", shifted: "/" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "Delete",
+    en: { regular: "Del", shifted: "Del" },
+    ru: { regular: "Del", shifted: "Del" },
+    classCSS: "button"
+  },
+
+  {
     code: "CapsLock",
     en: { regular: "CapsLock", shifted: "CapsLock" },
     ru: { regular: "CapsLock", shifted: "CapsLock" },
     classCSS: "button"
   },
 
+  {
+    code: "KeyA",
+    en: { regular: "a" },
+    ru: { regular: "ф" },
+    classCSS: "button"
+  },
+ 
+  {
+    code: "KeyS",
+    en: { regular: "s" },
+    ru: { regular: "ы" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "KeyD",
+    en: { regular: "d" },
+    ru: { regular: "в" },
+    classCSS: "button"
+  },
+
+  {
+    code: "KeyF",
+    en: { regular: "f" },
+    ru: { regular: "а" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "KeyG",
+    en: { regular: "g" },
+    ru: { regular: "п" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "KeyH",
+    en: { regular: "h" },
+    ru: { regular: "р" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "KeyJ",
+    en: { regular: "j" },
+    ru: { regular: "о" },
+    classCSS: "button"
+  },
+
+  {
+    code: "KeyK",
+    en: { regular: "k" },
+    ru: { regular: "л" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "KeyL",
+    en: { regular: "l" },
+    ru: { regular: "д" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "Semicolon",
+    en: { regular: ";", shifted: ":" },
+    ru: { regular: "ж" },
+    classCSS: "button"
+  },
+
+  {
+    code: "Quote",
+    en: { regular: "'", shifted: "\"" },
+    ru: { regular: "э" },
+    classCSS: "button"
+  },
+ 
+  {
+    code: "Enter",
+    en: { regular: "Enter", shifted: "Enter" },
+    ru: { regular: "Enter", shifted: "Enter" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "ShiftLeft",
+    en: { regular: "Shift", shifted: "Shift" },
+    ru: { regular: "Shift", shifted: "Shift" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "KeyZ",
+    en: { regular: "z" },
+    ru: { regular: "я" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "KeyX",
+    en: { regular: "x" },
+    ru: { regular: "ч" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "KeyC",
+    en: { regular: "c" },
+    ru: { regular: "с" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "KeyV",
+    en: { regular: "v" },
+    ru: { regular: "м" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "KeyB",
+    en: { regular: "b" },
+    ru: { regular: "и" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "KeyN",
+    en: { regular: "n" },
+    ru: { regular: "т" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "KeyM",
+    en: { regular: "m" },
+    ru: { regular: "ь" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "Comma",
+    en: { regular: ",", shifted: "<" },
+    ru: { regular: "б" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "Period",
+    en: { regular: ".", shifted: ">" },
+    ru: { regular: "ю" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "Slash",
+    en: { regular: "/", shifted: "?" },
+    ru: { regular: ".", shifted: "," },
+    classCSS: "button"
+  },
+  
+  {
+    code: "ArrowUp",
+    en: { regular: "↑", shifted: "↑" },
+    ru: { regular: "↑", shifted: "↑" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "ShiftRight",
+    en: { regular: "Shift", shifted: "Shift" },
+    ru: { regular: "Shift", shifted: "Shift" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "ControlLeft",
+    en: { regular: "Ctrl", shifted: "Ctrl" },
+    ru: { regular: "Ctrl", shifted: "Ctrl" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "MetaLeft",
+    en: { regular: "Win", shifted: "Win" },
+    ru: { regular: "Win", shifted: "Win" },
+    classCSS: "button"
+  },
+
+  {
+    code: "AltLeft",
+    en: { regular: "Alt", shifted: "Alt" },
+    ru: { regular: "Alt", shifted: "Alt" },
+    classCSS: "button"
+  },
+ 
+  {
+    code: "Space",
+    en: { regular: "Space", shifted: "Space" },
+    ru: { regular: "Space", shifted: "Space" },
+    classCSS: "button"
+  },
+
+  {
+    code: "AltRight",
+    en: { regular: "Alt", shifted: "Alt" },
+    ru: { regular: "Alt", shifted: "Alt" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "ArrowLeft",
+    en: { regular: "←", shifted: "←" },
+    ru: { regular: "←", shifted: "←" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "ArrowDown",
+    en: { regular: "↓", shifted: "↓" },
+    ru: { regular: "↓", shifted: "↓" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "ArrowRight",
+    en: { regular: "→", shifted: "→" },
+    ru: { regular: "→", shifted: "→" },
+    classCSS: "button"
+  },
+  
+  {
+    code: "ControlRight",
+    en: { regular: "Ctrl", shifted: "Ctrl" },
+    ru: { regular: "Ctrl", shifted: "Ctrl" },
+    classCSS: "button"
+  },
 ]
-
-
-//["CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Enter"]
-//["ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ShiftRight"]
-// ["ControlLeft", "MetaLeft", "AltLeft", "Space", "AltRight", "MetaRight", "ContextMenu", "ControlRight"]
-
-
-
 
 export { data };

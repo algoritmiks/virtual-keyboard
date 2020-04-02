@@ -42,7 +42,7 @@ class State {
 
   updateKeysLanguage() {
     for (let key in this._keys) {
-      this._keys[key].keyDOM.innerText = this._keys[key][`${this._currentLanguage}Regular`];
+      this._keys[key].keyDOM.innerText = this._keys[key][this._currentLanguage].regular;
     }
   }
 
@@ -63,13 +63,13 @@ class State {
   }
 
   changeKeysCase() {
-    const shifted = `${this._currentLanguage}Shifted`;
     for (let key in this._keys) {
-      if ( !this._keys[key][shifted] && this._capsLockActive ) {
-        this._keys[key].keyDOM.innerText = this._keys[key].keyDOM.innerText.toUpperCase();
+      let currentKey = this._keys[key];
+      if ( !currentKey[this._currentLanguage].shifted && this._capsLockActive ) {
+        currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toUpperCase();
       }
-      if ( !this._keys[key][shifted] && !this._capsLockActive ) {
-        this._keys[key].keyDOM.innerText = this._keys[key].keyDOM.innerText.toLowerCase();
+      if ( !currentKey[this._currentLanguage].shifted && !this._capsLockActive ) {
+        currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toLowerCase();
       }
     }
   }
@@ -78,10 +78,12 @@ class State {
 
 class Key {
   constructor( key, currentLanguage ) {
-    this.enRegular = key.en.regular;
-    this.enShifted = key.en.shifted ? key.en.shifted : false;
-    this.ruRegular = key.ru.regular;
-    this.ruShifted = key.ru.shifted ? key.ru.shifted : false;
+    this.ru = {};
+    this.en = {};
+    this.en.regular = key.en.regular;
+    this.en.shifted = key.en.shifted ? key.en.shifted : false;
+    this.ru.regular = key.ru.regular;
+    this.ru.shifted = key.ru.shifted ? key.ru.shifted : false;
     this.addKeyToDOM( key, currentLanguage );
   }
 
@@ -89,7 +91,7 @@ class Key {
     let key = document.createElement("div");
     key.classList = keyData.classCSS;
     keyboard.appendChild(key);
-    key.innerText = this[`${currentLanguage}Regular`];
+    key.innerText = this[currentLanguage].regular;
     this.keyDOM = key;
   }
 }
@@ -108,15 +110,23 @@ keyboard.addEventListener('click', onMouseClick);
 
 
 let pressedKeys = new Set();
+
 document.addEventListener('keydown', (key) => {
-// document.addEventListener('keypress', (key) => {
-  if ( key.code === "CapsLock" ) {
-    if (!key.repeat) {
-    state.changeCapsLockActive();
+  if (!key.repeat) {
+    if ( key.code === "CapsLock" ) {
+      state.changeCapsLockActive();
+    }
+  pressedKeys.add(key.code);
   }
-  }
-  pressedKeys.add(key.keyCode);
+  
+  
   textarea.value =  `key - ${key.key}, code - ${key.code}, charcode ${key.charCode}`;
+});
+
+
+document.addEventListener('keyup', event => {
+  console.log(pressedKeys);
+  pressedKeys.delete(event.code);
 });
 
 window.state = state;
