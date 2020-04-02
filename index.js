@@ -127,6 +127,10 @@ keyboard.addEventListener('mouseup', onMouseUp);
 let pressedKeys = new Set();
 
 document.addEventListener('keydown', key => {
+  if ( key.code === "Tab" ||  key.code === "AltLeft" ||  key.code === "AltRight" )  {
+    key.preventDefault();
+  }
+  
   if (!key.repeat) {
     if ( key.code === "CapsLock" ) {
       state.changeCapsLockActive();
@@ -135,9 +139,8 @@ document.addEventListener('keydown', key => {
   
   pressedKeys.add(key.code);
   }
-  
-  
-  textarea.value =  `key - ${key.key}, code - ${key.code}, charcode ${key.charCode}`;
+  textarea.value += state._keys[key.code].keyDOM.innerText;
+  // textarea.value =  `key - ${key.key}, code - ${key.code}, charcode ${key.charCode}`;
 });
 
 
@@ -146,13 +149,13 @@ document.addEventListener('keyup', key => {
   pressedKeys.forEach((el)=>{
     keys.push(el);
   })
-  if (keys.includes("ControlLeft") && keys.includes("AltLeft")) {
+  if (keys.includes("ControlLeft") && keys.includes("AltLeft") && keys.length == 2) {
     state.changeLanguage();
   }
-  
-  console.log(pressedKeys);
   state.removeActiveCSS(key.code);
-  pressedKeys.delete(event.code);
+  pressedKeys.delete(key.code);
 });
+
+
 
 window.state = state;
