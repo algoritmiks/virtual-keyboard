@@ -144,8 +144,10 @@ class State {
     }
 
     if ( keyCode === "ArrowLeft" ) {
+      if ( textarea.selectionStart > 0 ) {
       textarea.selectionStart = textarea.selectionStart - 1;
       textarea.selectionEnd = textarea.selectionEnd - 1;
+      }
     }
 
     if ( keyCode === "ArrowRight" ) {
