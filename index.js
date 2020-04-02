@@ -78,27 +78,18 @@ class State {
   toggleKeyShift() {
     for (let key in this.keys) {
       let currentKey = this.keys[key];
-      if (currentKey[this.currentLanguage].shifted && this.shiftActive) {
-        currentKey.keyDOM.innerText = currentKey[this.currentLanguage].shifted;
-      } 
-
-      if (currentKey[this.currentLanguage].shifted && !this.shiftActive) {
-        currentKey.keyDOM.innerText = currentKey[this.currentLanguage].regular;
-      } 
-
-
-      if (!currentKey[this.currentLanguage].shifted) {
-        if (this.shiftActive && this.capsLockActive) {
+      if (currentKey[this.currentLanguage].shifted) {
+        if (this.shiftActive) {
+          currentKey.keyDOM.innerText = currentKey[this.currentLanguage].shifted;
+        } else {
+          currentKey.keyDOM.innerText = currentKey[this.currentLanguage].regular;
+        }
+      } else {
+        if ((this.shiftActive && this.capsLockActive) || (!this.shiftActive && !this.capsLockActive)) {
           currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toLowerCase();
         }
-        if (this.shiftActive && !this.capsLockActive) {
+        if ((this.shiftActive && !this.capsLockActive) || (!this.shiftActive && this.capsLockActive)) {
           currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toUpperCase();
-        }
-        if (!this.shiftActive && this.capsLockActive) {
-          currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toUpperCase();
-        }
-        if (!this.shiftActive && !this.capsLockActive) {
-          currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toLowerCase();
         }
       }
     }
@@ -112,26 +103,28 @@ class State {
     this.keys[keyCode].keyDOM.classList.remove("active");
   }
 
-
   changeShiftActive() {
     this.shiftActive = !this.shiftActive;
     this.toggleKeyShift();
   }
 
-
   specialKeysHandle( keyCode, repeat ) {
     if (keyCode === "Space") {
       textarea.value += " ";
     }
+
     if (keyCode === "Tab") {
       textarea.value += "\t";
     }
+
     if (keyCode === "Enter") {
       textarea.value += "\n";
     }
+
     if (keyCode === "Backspace") {
       textarea.value = textarea.value.slice(0, -1);
     }
+
     if (keyCode === "Delete") {
       //delete soon here
     }
@@ -143,11 +136,8 @@ class State {
     if ( keyCode === "CapsLock" && !repeat) {
       this.changeCapsLockActive();
     }
-    
   }
-
 }
-
 
 class Key {
   constructor( key, currentLanguage ) {
@@ -188,8 +178,6 @@ const onMouseUp = (e) => {
 keyboard.addEventListener('mouseup', onMouseUp);
 
 
-
-
 const onKeyDown = (key) => {
   key.preventDefault();
   if (state.keys[key.code]) {
@@ -219,7 +207,6 @@ const onKeyUp = (key) => {
     }
     if (key.key === "Shift") {
       state.changeShiftActive();
-
     };
     state.removeActiveCSS(key.code);
     pressedKeys.delete(key.code);
@@ -231,7 +218,7 @@ document.addEventListener('keyup', onKeyUp);
 
 const onload = () => {
   textarea.focus();
-  // alert("Переключение раскладки left Alt - left Ctrl");
+  alert("Переключение раскладки left Alt - left Ctrl");
 }
 window.onload = onload;
 window.state = state;
