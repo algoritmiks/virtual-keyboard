@@ -75,6 +75,35 @@ class State {
     }
   }
 
+  toggleKeyShift() {
+    for (let key in this.keys) {
+      let currentKey = this.keys[key];
+      if (currentKey[this.currentLanguage].shifted && this.shiftActive) {
+        currentKey.keyDOM.innerText = currentKey[this.currentLanguage].shifted;
+      } 
+
+      if (currentKey[this.currentLanguage].shifted && !this.shiftActive) {
+        currentKey.keyDOM.innerText = currentKey[this.currentLanguage].regular;
+      } 
+
+
+      if (!currentKey[this.currentLanguage].shifted) {
+        if (this.shiftActive && this.capsLockActive) {
+          currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toLowerCase();
+        }
+        if (this.shiftActive && !this.capsLockActive) {
+          currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toUpperCase();
+        }
+        if (!this.shiftActive && this.capsLockActive) {
+          currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toUpperCase();
+        }
+        if (!this.shiftActive && !this.capsLockActive) {
+          currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toLowerCase();
+        }
+      }
+    }
+  }
+
   addActiveCSS( keyCode ) {
     this.keys[keyCode].keyDOM.classList.add("active");
   }
@@ -82,6 +111,13 @@ class State {
   removeActiveCSS( keyCode ) {
     this.keys[keyCode].keyDOM.classList.remove("active");
   }
+
+
+  changeShiftActive() {
+    this.shiftActive = !this.shiftActive;
+    this.toggleKeyShift();
+  }
+
 
   specialKeysHandle( keyCode, repeat ) {
     if (keyCode === "Space") {
@@ -100,8 +136,12 @@ class State {
       //delete soon here
     }
 
+    if ( (keyCode === "ShiftLeft" || keyCode === "ShiftRight") && !repeat) {
+      this.changeShiftActive();
+    }
+
     if ( keyCode === "CapsLock" && !repeat) {
-      state.changeCapsLockActive();
+      this.changeCapsLockActive();
     }
     
   }
@@ -177,6 +217,10 @@ const onKeyUp = (key) => {
     if (keys.includes("ControlLeft") && keys.includes("AltLeft") && keys.length == 2) {
       state.changeLanguage();
     }
+    if (key.key === "Shift") {
+      state.changeShiftActive();
+
+    };
     state.removeActiveCSS(key.code);
     pressedKeys.delete(key.code);
     textarea.focus();
@@ -187,6 +231,7 @@ document.addEventListener('keyup', onKeyUp);
 
 const onload = () => {
   textarea.focus();
-  alert("Переключение раскладки left Alt - left Ctrl");
+  // alert("Переключение раскладки left Alt - left Ctrl");
 }
 window.onload = onload;
+window.state = state;
