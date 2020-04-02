@@ -142,6 +142,15 @@ class State {
     if ( keyCode === "CapsLock" && !repeat) {
       this.changeCapsLockActive();
     }
+
+    if ( keyCode === "ArrowLeft" ) {
+      textarea.selectionStart = textarea.selectionStart - 1;
+      textarea.selectionEnd = textarea.selectionEnd - 1;
+    }
+
+    if ( keyCode === "ArrowRight" ) {
+      textarea.selectionStart = textarea.selectionStart + 1;
+    }
   }
 }
 

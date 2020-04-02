@@ -437,7 +437,8 @@ const data = [
     code: "ArrowLeft",
     en: { regular: "←", shifted: "←" },
     ru: { regular: "←", shifted: "←" },
-    classCSS: "button"
+    classCSS: "button",
+    special: true
   },
   
   {
@@ -451,7 +452,8 @@ const data = [
     code: "ArrowRight",
     en: { regular: "→", shifted: "→" },
     ru: { regular: "→", shifted: "→" },
-    classCSS: "button"
+    classCSS: "button",
+    special: true
   },
   
   {
