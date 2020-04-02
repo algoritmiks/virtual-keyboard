@@ -122,7 +122,10 @@ class State {
     }
 
     if (keyCode === "Backspace") {
-      textarea.value = textarea.value.slice(0, -1);
+      let currentCarriagePosition = textarea.selectionStart;
+      textarea.value = `${textarea.value.substring(0, textarea.selectionStart-1)}${textarea.value.substring(textarea.selectionStart)}`;
+      textarea.selectionStart = currentCarriagePosition-1;
+      textarea.selectionEnd = currentCarriagePosition-1;
     }
 
     if (keyCode === "Delete") {
