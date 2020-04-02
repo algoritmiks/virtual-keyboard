@@ -1,5 +1,5 @@
 import { data } from './data/data.js';
-   
+
 const wrapper = document.createElement("div");
 wrapper.classList.add("wrapper");
 document.body.appendChild(wrapper);
@@ -14,12 +14,12 @@ wrapper.appendChild(keyboard);
 
 
 class State {
-  constructor( data ) {
+  constructor(data) {
     this.currentLanguage = this.getStoredLanguage();
     this.capsLockActive = false;
     this.shiftActive = false;
     this.keys = {};
-    this.initKeys( data );
+    this.initKeys(data);
   }
 
   getStoredLanguage() {
@@ -27,7 +27,7 @@ class State {
     if (!localStorageLanguage) {
       localStorage.setItem("keyboardLanguage", "en");
       return "en";
-    } 
+    }
     return localStorageLanguage;
   }
 
@@ -35,9 +35,9 @@ class State {
     localStorage.setItem("keyboardLanguage", this.currentLanguage);
   }
 
-  initKeys( data ) {
-    data.forEach( el => {
-      this.keys[el.code] = new Key( el, this.currentLanguage );
+  initKeys(data) {
+    data.forEach(el => {
+      this.keys[el.code] = new Key(el, this.currentLanguage);
     })
   }
 
@@ -66,10 +66,10 @@ class State {
   toggleKeyCaps() {
     for (let key in this.keys) {
       let currentKey = this.keys[key];
-      if ( !currentKey[this.currentLanguage].shifted && this.capsLockActive ) {
+      if (!currentKey[this.currentLanguage].shifted && this.capsLockActive) {
         currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toUpperCase();
       }
-      if ( !currentKey[this.currentLanguage].shifted && !this.capsLockActive ) {
+      if (!currentKey[this.currentLanguage].shifted && !this.capsLockActive) {
         currentKey.keyDOM.innerText = currentKey.keyDOM.innerText.toLowerCase();
       }
     }
@@ -95,11 +95,11 @@ class State {
     }
   }
 
-  addActiveCSS( keyCode ) {
+  addActiveCSS(keyCode) {
     this.keys[keyCode].keyDOM.classList.add("active");
   }
 
-  removeActiveCSS( keyCode ) {
+  removeActiveCSS(keyCode) {
     this.keys[keyCode].keyDOM.classList.remove("active");
   }
 
@@ -108,7 +108,7 @@ class State {
     this.toggleKeyShift();
   }
 
-  specialKeysHandle( keyCode, repeat ) {
+  specialKeysHandle(keyCode, repeat) {
     if (keyCode === "Space") {
       textarea.value += " ";
     }
@@ -124,35 +124,35 @@ class State {
     if (keyCode === "Backspace") {
       let currentCarriagePosition = textarea.selectionStart;
       if (currentCarriagePosition > 0) {
-        textarea.value = `${textarea.value.substring(0, textarea.selectionStart-1)}${textarea.value.substring(textarea.selectionStart)}`;
-        textarea.selectionStart = currentCarriagePosition-1;
-        textarea.selectionEnd = currentCarriagePosition-1;
+        textarea.value = `${textarea.value.substring(0, textarea.selectionStart - 1)}${textarea.value.substring(textarea.selectionStart)}`;
+        textarea.selectionStart = currentCarriagePosition - 1;
+        textarea.selectionEnd = currentCarriagePosition - 1;
       }
     }
 
     if (keyCode === "Delete") {
       let currentCarriagePosition = textarea.selectionStart;
-      textarea.value = `${textarea.value.substring(0, textarea.selectionStart)}${textarea.value.substring(textarea.selectionStart+1)}`;
+      textarea.value = `${textarea.value.substring(0, textarea.selectionStart)}${textarea.value.substring(textarea.selectionStart + 1)}`;
       textarea.selectionStart = currentCarriagePosition;
       textarea.selectionEnd = currentCarriagePosition;
     }
 
-    if ( (keyCode === "ShiftLeft" || keyCode === "ShiftRight") && !repeat) {
+    if ((keyCode === "ShiftLeft" || keyCode === "ShiftRight") && !repeat) {
       this.changeShiftActive();
     }
 
-    if ( keyCode === "CapsLock" && !repeat) {
+    if (keyCode === "CapsLock" && !repeat) {
       this.changeCapsLockActive();
     }
 
-    if ( keyCode === "ArrowLeft" ) {
-      if ( textarea.selectionStart > 0 ) {
-      textarea.selectionStart = textarea.selectionStart - 1;
-      textarea.selectionEnd = textarea.selectionEnd - 1;
+    if (keyCode === "ArrowLeft") {
+      if (textarea.selectionStart > 0) {
+        textarea.selectionStart = textarea.selectionStart - 1;
+        textarea.selectionEnd = textarea.selectionEnd - 1;
       }
     }
 
-    if ( keyCode === "ArrowRight" ) {
+    if (keyCode === "ArrowRight") {
       textarea.selectionStart = textarea.selectionStart + 1;
     }
   }
@@ -161,13 +161,13 @@ class State {
     let currentCarriagePosition = textarea.selectionStart;
     textarea.value = `${textarea.value.substring(0, textarea.selectionStart)}${symbol}${textarea.value.substring(textarea.selectionStart)}`;
     textarea.selectionStart = currentCarriagePosition + 1;
-    textarea.selectionEnd = currentCarriagePosition +1;
+    textarea.selectionEnd = currentCarriagePosition + 1;
   }
 
 }
 
 class Key {
-  constructor( key, currentLanguage ) {
+  constructor(key, currentLanguage) {
     this.ru = {};
     this.en = {};
     this.en.regular = key.en.regular;
@@ -175,10 +175,10 @@ class Key {
     this.ru.regular = key.ru.regular;
     this.ru.shifted = key.ru.shifted ? key.ru.shifted : false;
     this.special = key.special ? true : false;
-    this.addKeyToDOM( key, currentLanguage );
+    this.addKeyToDOM(key, currentLanguage);
   }
 
-  addKeyToDOM( keyData, currentLanguage ) {
+  addKeyToDOM(keyData, currentLanguage) {
     let key = document.createElement("div");
     key.classList = keyData.classCSS;
     keyboard.appendChild(key);
@@ -188,7 +188,7 @@ class Key {
 }
 
 
-let state = new State( data );
+let state = new State(data);
 let pressedKeys = new Set();
 
 const onMouseUp = (e) => {
