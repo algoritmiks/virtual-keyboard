@@ -76,11 +76,11 @@ class State {
   }
 
   addActiveCSS( keyCode ) {
-    state._keys[keyCode].keyDOM.classList.add("active");
+    this._keys[keyCode].keyDOM.classList.add("active");
   }
 
   removeActiveCSS( keyCode ) {
-    state._keys[keyCode].keyDOM.classList.remove("active");
+    this._keys[keyCode].keyDOM.classList.remove("active");
   }
 
 }
@@ -110,7 +110,7 @@ class Key {
 
 let state = new State( data );
 
-const onMouseClick = (e) => {
+const onMouseUp = (e) => {
   if (e.target.classList.contains("button")) {
     if (e.target.innerText === "CapsLock") {
       state.changeCapsLockActive();
@@ -121,7 +121,7 @@ const onMouseClick = (e) => {
   }
 }
 
-keyboard.addEventListener('mousedown', onMouseClick);
+keyboard.addEventListener('mouseup', onMouseUp);
 
 
 let pressedKeys = new Set();
