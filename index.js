@@ -1,4 +1,4 @@
-import { data } from './data/data.js';
+import { data } from './modules/data.js';
 
 const wrapper = document.createElement("div");
 wrapper.classList.add("wrapper");
@@ -194,15 +194,20 @@ let pressedKeys = new Set();
 
 const onMouseUp = (e) => {
   let pressedKey = e.target.dataset.code;
-  if (pressedKey === "ShiftLeft" || pressedKey === "ShiftRight" || keyboard.mouseOnShift) {
+  if (pressedKey === "ShiftLeft" || pressedKey === "ShiftRight" || keyboard.mouseShiftPressed) {
+    keyboard.mouseShiftPressed = false;
     keyboard.changeShiftActive();
   };
   textarea.focus({ preventScroll: true });
 }
 
-keyboardWrapper.addEventListener('mouseup', onMouseUp);
+window.addEventListener('mouseup', onMouseUp);
 
 const onMouseDown = (e) => {
+  let pressedKey = e.target.dataset.code;
+  if (pressedKey === "ShiftLeft" || pressedKey === "ShiftRight") {
+    keyboard.mouseShiftPressed = true;
+  }
   if (e.target.classList.contains("button")) {
     let pressedKey = keyboard.keys[e.target.dataset.code];
     if (!pressedKey.special) {
@@ -256,3 +261,4 @@ const onload = () => {
   textarea.focus();
 }
 window.onload = onload;
+window.keyboard = keyboard;
