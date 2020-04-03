@@ -171,8 +171,12 @@ class Keyboard {
       textarea.selectionEnd = currentCarriagePosition;
     }
 
-    if ((keyCode === 'ShiftLeft' || keyCode === 'ShiftRight') && !repeat) {
-      this.changeShiftActive();
+    if ((keyCode === 'ShiftLeft' || keyCode === 'ShiftRight')) {
+      if (this.shiftActive) {
+        this.addActiveCSS(keyCode);
+      } else {
+        this.changeShiftActive();
+      }
     }
 
     if (keyCode === 'CapsLock' && !repeat) {
