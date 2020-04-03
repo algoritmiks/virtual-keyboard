@@ -6,6 +6,7 @@ document.body.appendChild(wrapper);
 
 const textarea = document.createElement("textarea");
 textarea.classList.add("textarea");
+textarea.placeholder = "Layout change left Alt - left Ctrl";
 wrapper.appendChild(textarea);
 
 const keyboardWrapper = document.createElement("div");
@@ -203,22 +204,18 @@ let keyboard = new Keyboard(data);
 let pressedKeys = new Set();
 
 const onMouseUp = (e) => {
-  let pressedKey = e.target.dataset.code;
   if ( keyboard.mouseShiftPressed ) {
     keyboard.mouseShiftPressed = false;
     keyboard.changeShiftActive();
   };
-
-  
   keyboard.removeActiveCSSFromAllKeys();
-
-
   textarea.focus({ preventScroll: true });
 }
 
 window.addEventListener('mouseup', onMouseUp);
 
 const onMouseDown = (e) => {
+  if (e.target.classList.contains("button")) {
   let pressedKey = e.target.dataset.code;
   keyboard.addActiveCSS(pressedKey);
   if (pressedKey === "ShiftLeft" || pressedKey === "ShiftRight") {
@@ -232,6 +229,7 @@ const onMouseDown = (e) => {
       keyboard.specialKeysHandle(e.target.dataset.code, false);
     }
   }
+}
 }
 
 keyboardWrapper.addEventListener('mousedown', onMouseDown);

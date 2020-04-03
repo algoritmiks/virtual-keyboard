@@ -27,6 +27,10 @@ body {
   outline: none;
 }
 
+textarea::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.336);
+}
+
 .keyboard {
   display: flex;
   flex-wrap: wrap;
