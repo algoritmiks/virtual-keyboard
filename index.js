@@ -12,8 +12,6 @@ wrapper.appendChild(textarea);
 const keyboardWrapper = document.createElement("div");
 keyboardWrapper.classList.add("keyboard");
 wrapper.appendChild(keyboardWrapper);
-
-
 class Keyboard {
   constructor(data) {
     this.currentLanguage = this.getStoredLanguage();
@@ -204,7 +202,7 @@ let keyboard = new Keyboard(data);
 let pressedKeys = new Set();
 
 const onMouseUp = (e) => {
-  if ( keyboard.mouseShiftPressed ) {
+  if (keyboard.mouseShiftPressed) {
     keyboard.mouseShiftPressed = false;
     keyboard.changeShiftActive();
   };
@@ -216,20 +214,20 @@ window.addEventListener('mouseup', onMouseUp);
 
 const onMouseDown = (e) => {
   if (e.target.classList.contains("button")) {
-  let pressedKey = e.target.dataset.code;
-  keyboard.addActiveCSS(pressedKey);
-  if (pressedKey === "ShiftLeft" || pressedKey === "ShiftRight") {
-    keyboard.mouseShiftPressed = true;
-  }
-  if (e.target.classList.contains("button")) {
-    let pressedKey = keyboard.keys[e.target.dataset.code];
-    if (!pressedKey.special) {
-      keyboard.addSymbolToTextarea(pressedKey.keyDOM.innerText);
-    } else {
-      keyboard.specialKeysHandle(e.target.dataset.code, false);
+    let pressedKey = e.target.dataset.code;
+    keyboard.addActiveCSS(pressedKey);
+    if (pressedKey === "ShiftLeft" || pressedKey === "ShiftRight") {
+      keyboard.mouseShiftPressed = true;
+    }
+    if (e.target.classList.contains("button")) {
+      let pressedKey = keyboard.keys[e.target.dataset.code];
+      if (!pressedKey.special) {
+        keyboard.addSymbolToTextarea(pressedKey.keyDOM.innerText);
+      } else {
+        keyboard.specialKeysHandle(e.target.dataset.code, false);
+      }
     }
   }
-}
 }
 
 keyboardWrapper.addEventListener('mousedown', onMouseDown);
