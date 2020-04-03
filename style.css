@@ -45,7 +45,7 @@ body {
   background-color: rgb(196, 196, 196);
   font-weight: 600;
   user-select: none;
-  transition: all ease 0.6s;
+  transition: all ease 0.3s;
   cursor: pointer;
 }
 
@@ -67,6 +67,10 @@ body {
 
 .button:hover {
   background-color: rgb(180, 180, 180);
+}
+
+.button:active {
+  background-color: #FFFFFF;
 }
 
 .active {

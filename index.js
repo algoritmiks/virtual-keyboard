@@ -104,6 +104,12 @@ class Keyboard {
     this.keys[keyCode].keyDOM.classList.remove("active");
   }
 
+  removeActiveCSSFromAllKeys() {
+    for (let key in this.keys) {
+      this.removeActiveCSS(key);
+    }
+  }
+
   changeShiftActive() {
     this.shiftActive = !this.shiftActive;
     this.toggleKeyShift();
@@ -198,10 +204,15 @@ let pressedKeys = new Set();
 
 const onMouseUp = (e) => {
   let pressedKey = e.target.dataset.code;
-  if (pressedKey === "ShiftLeft" || pressedKey === "ShiftRight" || keyboard.mouseShiftPressed) {
+  if ( keyboard.mouseShiftPressed ) {
     keyboard.mouseShiftPressed = false;
     keyboard.changeShiftActive();
   };
+
+  
+  keyboard.removeActiveCSSFromAllKeys();
+
+
   textarea.focus({ preventScroll: true });
 }
 
@@ -209,6 +220,7 @@ window.addEventListener('mouseup', onMouseUp);
 
 const onMouseDown = (e) => {
   let pressedKey = e.target.dataset.code;
+  keyboard.addActiveCSS(pressedKey);
   if (pressedKey === "ShiftLeft" || pressedKey === "ShiftRight") {
     keyboard.mouseShiftPressed = true;
   }
