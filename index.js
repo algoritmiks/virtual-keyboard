@@ -133,7 +133,12 @@ class Keyboard {
 
     if (keyCode === "Delete") {
       let currentCarriagePosition = textarea.selectionStart;
-      textarea.value = `${textarea.value.substring(0, textarea.selectionStart)}${textarea.value.substring(textarea.selectionStart + 1)}`;
+      let endSelected = textarea.selectionEnd;
+      if (currentCarriagePosition === endSelected) {
+        textarea.value = `${textarea.value.substring(0, textarea.selectionStart)}${textarea.value.substring(textarea.selectionStart + 1)}`;
+      } else {
+        textarea.value = `${textarea.value.substring(0, textarea.selectionStart)}${textarea.value.substring(endSelected)}`;
+      }
       textarea.selectionStart = currentCarriagePosition;
       textarea.selectionEnd = currentCarriagePosition;
     }
@@ -166,7 +171,6 @@ class Keyboard {
   }
 
 }
-
 class Key {
   constructor(key, currentLanguage) {
     this.ru = {};
@@ -260,5 +264,5 @@ document.addEventListener('keyup', onKeyUp);
 const onload = () => {
   textarea.focus();
 }
+
 window.onload = onload;
-window.keyboard = keyboard;
