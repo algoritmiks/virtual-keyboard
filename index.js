@@ -21,7 +21,7 @@ class Key {
     this.en.shifted = key.en.shifted ? key.en.shifted : false;
     this.ru.regular = key.ru.regular;
     this.ru.shifted = key.ru.shifted ? key.ru.shifted : false;
-    this.special = !!key.special;
+    this.special = key.special;
     this.addKeyToDOM(key, currentLanguage);
   }
 
