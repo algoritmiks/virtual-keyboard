@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx eslint ./index.js",
+    "server": "webpack-dev-server --mode development",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "watch": "webpack --mode development --watch"
   },
   "repository": {
     "type": "git",
@@ -18,6 +22,7 @@
   "homepage": "https://github.com/algoritmiks/virtual-keyboard#readme",
   "devDependencies": {
     "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0"
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
   }
 }
