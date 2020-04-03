@@ -192,6 +192,7 @@ let state = new State(data);
 let pressedKeys = new Set();
 
 const onMouseUp = (e) => {
+  
   let pressedKey = e.target.dataset.code;
   if ( pressedKey === "ShiftLeft" || pressedKey === "ShiftRight" ) {
     state.changeShiftActive();
@@ -214,8 +215,6 @@ const onMouseDown = (e) => {
 
 keyboard.addEventListener('mousedown', onMouseDown);
 
-// keyboard.addEventListener('mouseout', onMouseUp);
-
 const onKeyDown = (key) => {
   key.preventDefault();
   if (state.keys[key.code]) {
@@ -236,6 +235,7 @@ document.addEventListener('keydown', onKeyDown);
 
 const onKeyUp = (key) => {
   if (state.keys[key.code]) {
+    key.preventDefault();
     let keys = [];
     pressedKeys.forEach((el) => {
       keys.push(el);
@@ -248,7 +248,6 @@ const onKeyUp = (key) => {
     };
     state.removeActiveCSS(key.code);
     pressedKeys.delete(key.code);
-    textarea.focus();
   }
 };
 
