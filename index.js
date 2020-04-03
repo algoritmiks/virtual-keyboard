@@ -34,6 +34,7 @@ class Key {
     this.keyDOM = key;
   }
 }
+
 class Keyboard {
   constructor() {
     this.currentLanguage = this.getStoredLanguage();
