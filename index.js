@@ -8,17 +8,18 @@ const textarea = document.createElement("textarea");
 textarea.classList.add("textarea");
 wrapper.appendChild(textarea);
 
-const keyboard = document.createElement("div");
-keyboard.classList.add("keyboard");
-wrapper.appendChild(keyboard);
+const keyboardWrapper = document.createElement("div");
+keyboardWrapper.classList.add("keyboard");
+wrapper.appendChild(keyboardWrapper);
 
 
-class State {
+class Keyboard {
   constructor(data) {
     this.currentLanguage = this.getStoredLanguage();
     this.capsLockActive = false;
     this.shiftActive = false;
     this.keys = {};
+    this.mouseShiftPressed = false;
     this.initKeys(data);
   }
 
@@ -182,72 +183,70 @@ class Key {
     let key = document.createElement("div");
     key.classList = keyData.classCSS;
     key.dataset.code = keyData.code;
-    keyboard.appendChild(key);
+    keyboardWrapper.appendChild(key);
     key.innerText = this[currentLanguage].regular;
     this.keyDOM = key;
   }
 }
 
-let state = new State(data);
+let keyboard = new Keyboard(data);
 let pressedKeys = new Set();
 
 const onMouseUp = (e) => {
-  
   let pressedKey = e.target.dataset.code;
-  if ( pressedKey === "ShiftLeft" || pressedKey === "ShiftRight" ) {
-    state.changeShiftActive();
+  if (pressedKey === "ShiftLeft" || pressedKey === "ShiftRight" || keyboard.mouseOnShift) {
+    keyboard.changeShiftActive();
   };
-  textarea.focus();
+  textarea.focus({ preventScroll: true });
 }
 
-keyboard.addEventListener('mouseup', onMouseUp);
+keyboardWrapper.addEventListener('mouseup', onMouseUp);
 
 const onMouseDown = (e) => {
   if (e.target.classList.contains("button")) {
-    let pressedKey = state.keys[e.target.dataset.code];
+    let pressedKey = keyboard.keys[e.target.dataset.code];
     if (!pressedKey.special) {
-      state.addSymbolToTextarea(pressedKey.keyDOM.innerText);
+      keyboard.addSymbolToTextarea(pressedKey.keyDOM.innerText);
     } else {
-      state.specialKeysHandle(e.target.dataset.code, false);
+      keyboard.specialKeysHandle(e.target.dataset.code, false);
     }
   }
 }
 
-keyboard.addEventListener('mousedown', onMouseDown);
+keyboardWrapper.addEventListener('mousedown', onMouseDown);
 
 const onKeyDown = (key) => {
   key.preventDefault();
-  if (state.keys[key.code]) {
+  if (keyboard.keys[key.code]) {
     if (!key.repeat) {
-      state.addActiveCSS(key.code);
+      keyboard.addActiveCSS(key.code);
       pressedKeys.add(key.code);
     }
-    if (!state.keys[key.code].special) {
-      state.addSymbolToTextarea(state.keys[key.code].keyDOM.innerText);
+    if (!keyboard.keys[key.code].special) {
+      keyboard.addSymbolToTextarea(keyboard.keys[key.code].keyDOM.innerText);
     } else {
-      state.specialKeysHandle(key.code, key.repeat);
+      keyboard.specialKeysHandle(key.code, key.repeat);
     }
-
   }
 };
 
 document.addEventListener('keydown', onKeyDown);
 
 const onKeyUp = (key) => {
-  if (state.keys[key.code]) {
-    key.preventDefault();
+  if (keyboard.keys[key.code]) {
     let keys = [];
     pressedKeys.forEach((el) => {
       keys.push(el);
     })
     if (keys.includes("ControlLeft") && keys.includes("AltLeft") && keys.length == 2) {
-      state.changeLanguage();
+      keyboard.changeLanguage();
     }
     if (key.key === "Shift") {
-      state.changeShiftActive();
+      keyboard.changeShiftActive();
     };
-    state.removeActiveCSS(key.code);
+    keyboard.removeActiveCSS(key.code);
     pressedKeys.delete(key.code);
+    textarea.focus({ preventScroll: true });
   }
 };
 
